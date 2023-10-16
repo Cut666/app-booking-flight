@@ -1,0 +1,4 @@
+{"email":"nam@gmail.com","passWord":"Hh12345@","position_id":0}
+{"email":"n@gmail.com","passWord":"Hh12345@","position_id":1,"notification":"3M618EEM6HAL"}
+{"email":"quan@gmail.com","passWord":"Hh12345@","position_id":1,"notification":"không có thông báo mới"}
+{"email":"q@gmail.com","passWord":"Hh12345@","position_id":1}

@@ -1,0 +1,5 @@
+{"voucherCode":"561AGHMB12CK","valueVoucher":5}
+{"voucherCode":"4C1JDG8GBL3J","valueVoucher":8}
+{"voucherCode":"GQ8FFYK6MB54","valueVoucher":10}
+{"voucherCode":"L7DCLGNG6FGQ","valueVoucher":9}
+{"voucherCode":"3MDGB6965MNK","valueVoucher":7}

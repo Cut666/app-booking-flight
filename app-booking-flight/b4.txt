@@ -1,0 +1,87 @@
+-- D?a vào hình v? trên, t?o 2 b?ng có c?u trúc nhu
+
+CREATE TABLE customers(
+	customer_id INT	PRIMARY KEY auto_increment not null,
+	first_name VARCHAR(255) not null
+	-- FOREIGN KEY (customer_id) REFERENCES orders(customer)
+)
+
+CREATE TABLE orders(
+	order_id int primary key auto_increment not null,
+	amount int not null,
+	customer int not null
+)
+
+-- Thêm d? li?u nhu hình trên
+INSERT INTO customers(customer_id, first_name) VALUES (1, "John"),
+(2, "Robert"),
+(3, "David"),
+(4, "John"),
+(5, "Betty")
+
+INSERT INTO orders(order_id, amount, customer) VALUES (1, 200, 10),
+(2, 500, 3),
+(3, 300, 6),
+(4, 800, 5),
+(5, 150, 8)
+
+-- L?y ra danh sách customer_id, first_name, amount, trong dó l?y c? nh?ng ngu?i chua d?t hàng
+
+SELECT customer_id , first_name,orders.amount FROM customers LEFT JOIN  orders on orders.customer = customer_id ORDER BY customer_id
+-- L?y ra danh sách customer (trong b?ng orders), first_name, amount, trong dó danh sách amount l?y d? bên b?ng orders
+SELECT customer , first_name,orders.amount FROM customers RIGHT JOIN   orders on orders.customer = customer_id 
+
+-- Dùng full outer join d? l?y ra d? li?u c?a c? 2 b?ng
+
+--
+SELECT first_name,order_id,amount FROM  customers FULL Join  orders on orders.customer = customer_id 
+
+--
+drop TABLE customers
+CREATE TABLE customers(
+	customer_id INT	PRIMARY KEY auto_increment ,
+	first_name VARCHAR(255),
+	last_name VARCHAR(255),
+	age int,
+	country VARCHAR(50)
+)
+
+INSERT INTO customers(first_name, last_name,age,country) VALUES 
+("John",'Doe',31,'USA'),
+("Robert",'Luna',22,'USA'),
+("David",'Robinson',22,'UK'),
+("John",'Reinhardt',25,'UK'),
+("Betty",'Doe',28,'UAE')
+
+-- D?a vào b?ng trên, l?y ra danh sách nh?ng ngu?i có tu?i th?p nh?t
+
+SELECT * FROM customers WHERE age =(SELECT Min(age) FROM customers)
+
+
+-- 
+CREATE TABLE paintings(
+	id int PRIMARY key auto_increment,
+	'name' varchar(255),
+	artist_id int ,
+	listed_price float
+)
+
+
+INSERT INTO paintings(name, artist_id,listed_price) VALUES 
+("Miracle",1,300),
+("Sunshine",1,700),
+("Pretty woman",2,2800),
+("Handsome man",2,2300),
+("Barbie",3,250),
+("Cool painting",3,5000),
+("Black square #100",3,50),
+("Mountains",4,1300)
+
+-- L?y ra danh sách nh?ng b?c hình có giá cao hon giá trung bình
+
+SELECT * FROM paintings WHERE listed_price >(SELECT AVG(listed_price) FROM paintings)
+
+
+
+
+

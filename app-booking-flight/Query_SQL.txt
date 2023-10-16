@@ -1,0 +1,45 @@
+--  tạo bảng hoa_don
+CREATE TABLE hoa_don(
+id INT PRIMARY KEY Not NULL AUTO_INCREMENT,
+product_name VARCHAR(255) NOT NULL,
+ten_khach_hang VARCHAR(255) NOT NULL,
+country VARCHAR(55) NOT NULL,
+gender VARCHAR(55) NOT NULL,
+email VARCHAR(255) NOT NULL,
+price FLOAT NOT NULL
+)
+
+SELECT * FROM hoa_don
+
+-- Viết câu lệnh lấy ra tổng số tiền của những người Mỹ đã mua
+
+SELECT * FROM hoa_don WHERE country='US'
+
+-- Viết câu lệnh lấy ra đơn hàng có giá thấp nhất theo tên sản phẩm
+
+SELECT id , product_name,ten_khach_hang,country,gender,email,MIN(price) as 'Giá tiền'
+FROM hoa_don GROUP BY product_name
+
+-- Viết câu lệnh lấy ra đơn hàng có giá cao nhất theo quốc gia
+
+SELECT id , product_name,ten_khach_hang,country,gender,email,MAX(price) as 'Giá tiền'
+FROM hoa_don GROUP BY country
+
+-- Viết câu lệnh lấy ra tổng số tiền theo giới tính
+
+SELECT gender,SUm(price) FROM hoa_don GROUP BY gender
+
+-- Viết câu lệnh lấy ra số tiền trungh bình theo quốc tịch
+
+SELECT country,AVG(price) FROM hoa_don GROUP BY country
+
+-- Viết câu lệnh cập nhật lại những đơn hàng có tên sản phẩm là ‘Tiêu bắc’ thì set giá = 1225
+
+UPDATE hoa_don SET price = '1225' WHERE product_name='Tiêu bắc'
+
+-- Viết câu lệnh xoá đi những đơn hàng của người Ấn Độ và đơn hàng đó có giá nằm trong 900 - 1200
+
+DELETE FROM hoa_don WHERE country = 'INDIA' AND price BETWEEN 900 AND 1200
+
+
+

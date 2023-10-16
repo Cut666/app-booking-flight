@@ -1,0 +1,43 @@
+-- Hệ thống quản lý bán hàng, lưu thông tin sản phẩm, nhà cung cấp, thể loại của sản phẩm, thông tin khách hàng. Cứ 1 vài tháng lại có chương trình giảm giá nhằm thu hút khách hàng như Valentine, Tết, Chrismast, Quốc Tế Phụ Nữ, Thiếu Nhi…
+-- Sau khi khách hàng sử dụng sản phẩm, sẽ có thể viết review cho sản phẩm
+-- Thiết kế hệ thống Db để đáp ứng yêu cầu hệ thống
+CREATE TABLE nha_cung_cap(
+	ma_nha_cung_cap VARCHAR(6) primary key,
+	ten_nha_cung_cap VARCHAR(50)
+)
+
+CREATE Table the_loai_san_pham(
+	ma_loai_san_pham VARCHAR(10) primary key,
+	ten_loai_san_pham VARCHAR(20),
+	ma_nha_cung_cap VARCHAR(6),
+	FOREIGN key (ma_nha_cung_cap) REFERENCES nha_cung_cap(ma_nha_cung_cap)
+)
+
+CREATE table khuyen_mai(
+	ma_km VARCHAR(10) primary key,
+	gia_tri_km_theo_san_pham float
+)
+
+CREATE table thong_tin_san_pham(
+	ma_nha_cung_cap VARCHAR(6),
+	FOREIGN key (ma_nha_cung_cap) REFERENCES nha_cung_cap(ma_nha_cung_cap),
+	ma_loai_san_pham VARCHAR(10),
+	FOREIGN key (ma_loai_san_pham) REFERENCES the_loai_san_pham(ma_loai_san_pham),
+	gia float,
+	ma_km VARCHAR(10),
+	FOREIGN key (ma_km) REFERENCES khuyen_mai(ma_km)
+)
+
+CREATE table thong_tin_khach_hang(
+	id int primary key auto_increment,
+	ten_khach_hang varchar(50),
+	so_dien_thoai varchar(11)
+)
+
+CREATE TABLE phan_hoi_thong_tin(
+	ma_loai_san_pham VARCHAR(10),
+	FOREIGN key (ma_loai_san_pham) REFERENCES the_loai_san_pham(ma_loai_san_pham),
+	id_khach_hang int,
+	FOREIGN key (id_khach_hang) REFERENCES thong_tin_khach_hang(id),
+	phan_hoi VARCHAR(255)
+)

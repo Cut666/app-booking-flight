@@ -1,0 +1,49 @@
+CREATE TABLE users(
+	id BIGINT PRIMARY KEY auto_increment,
+	username VARCHAR(255) not NULL,
+	pass VARCHAR(50) NOT NULL,
+	first_name VARCHAR(255),
+	last_name VARCHAR(255) ,
+	gender VARCHAR(50) DEFAULT('Male','FeMale',Null),
+	email VARCHAR(255) not null,
+	birth_day date not null,
+	phone VARCHAR(11),
+	address VARCHAR(255),
+	city VARCHAR(255),
+	country VARCHAR(255),
+	code_active VARCHAR(255),
+	status VARCHAR(255),
+	created_date date not null ,
+	update_date date not null
+)
+
+CREATE TABLE roles(
+	id int PRIMARY KEY auto_increment,
+	role_name VARCHAR(255) not null,
+	created_date date not null ,
+	update_date date not null
+)
+
+CREATE TABLE User_role(
+	id int PRIMARY KEY auto_increment,
+	user_id bigint,
+	role_id int,
+	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY (role_id) REFERENCES roles(id)
+)
+
+CREATE TABLE permissions(
+	id int PRIMARY KEY auto_increment,
+	permission_name VARCHAR(255) not null,
+	created_date date not null ,
+	update_date date not null
+)
+
+CREATE TABLE role_permission(
+	id int PRIMARY KEY auto_increment,
+	role_id int not null,
+	permission_id int not null,
+	FOREIGN KEY (permission_id) REFERENCES permissions(id),
+	FOREIGN KEY (role_id) REFERENCES roles(id)
+)
+

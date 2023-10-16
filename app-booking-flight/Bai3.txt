@@ -1,0 +1,155 @@
+-- T?o 2 b?ng:
+-- account: id, username, full_name, phone, email, created_date
+-- address: id, address, created_date
+-- và t?o thêm khoá ph? d? liên k?t 2 b?ng này ? d?ng quan h? 1 - 1
+CREATE TABLE account(
+	id INT primary key auto_increment,
+	username varchar(255) not null,
+	full_name varchar(255) not null,
+	phone varchar(11) not null,
+	email varchar(255) not null,
+	created_date  date not null
+)
+
+CREATE TABLE address(
+	id INT primary key auto_increment,
+	FOREIGN KEY (id) REFERENCES account(id),
+	address varchar(255) not null,
+	created_date  date not null
+)
+-- Thêm m?i b?ng 10 b?n ghi
+INSERT Into account(username,full_name,phone,email,created_date) VALUES
+('Nam','Bui Nam','0914546875','n12@gmail.com','2022-8-7'),
+('Hoang','Hoang Ha','0914153545','n421@gmail.com','2022-8-7'),
+('Nhan','Duc Nhan','091135785','n24@gmail.com','2022-8-7'),
+('Linh','Thuy Linh','0914457578','n5124@gmail.com','2022-8-7'),
+('Tien','Quang Tien','091278543','n12435@gmail.com','2022-8-7'),
+('Hung','Ngo hung','091413774','n1245@gmail.com','2022-8-7'),
+('Thai','Tran Thai','0453277542','n1@gmail.com','2022-8-7'),
+('Tien','Bui Tien','04534224435','nyg@gmail.com','2022-8-7'),
+('Nam','Hoang Nam','0945378534','ndfg@gmail.com','2022-8-7'),
+('Quan','Hoang Quan','091457523','ng123@gmail.com','2022-8-7')
+
+INSERT INTO address(address,created_date) VALUES
+('Ha Noi','2022-8-7'),
+('Ho Chi Minh','2022-8-7'),
+('Thai binh','2022-8-7'),
+('Quang Ninh','2022-8-7'),
+('Bac Giang','2022-8-7'),
+('Can Tho','2022-8-7'),
+('Lao Cai','2022-8-7'),
+('Phu Tho','2022-8-7'),
+('Nam Dinh','2022-8-7'),
+('HUng Yen','2022-8-7')
+
+-- Vi?t câu l?nh truy v?n d? li?u g?m nh?ng c?t: id, username, full_name, phone, email, created_date, address
+
+SELECT account.id , username,full_name,phone,email,account.created_date,address FROM account Join address on account.id=address.id
+
+-- Sau khi làm xong câu trên, xoá 2 b?ng dó di, t?o l?i 2 b?ng nhu câu 1, r?i t?o thêm khoá ph? d? liên k?t 2 b?ng này ? d?ng quan h? 1 - N
+
+drop table address
+drop TABLE account
+
+
+CREATE TABLE account(
+	id INT primary key auto_increment,
+	username varchar(255) not null,
+	full_name varchar(255) not null,
+	phone varchar(11) not null,
+	email varchar(255) not null,
+	created_date  date not null
+)
+
+CREATE TABLE address(
+	id INT,
+	FOREIGN KEY (id) REFERENCES account(id),
+	address varchar(255) not null,
+	created_date  date not null
+)
+
+INSERT Into account(username,full_name,phone,email,created_date) VALUES
+('Nam','Bui Nam','0914546875','n12@gmail.com','2022-8-7'),
+('Hoang','Hoang Ha','0914153545','n421@gmail.com','2022-8-7'),
+('Nhan','Duc Nhan','091135785','n24@gmail.com','2022-8-7'),
+('Linh','Thuy Linh','0914457578','n5124@gmail.com','2022-8-7'),
+('Tien','Quang Tien','091278543','n12435@gmail.com','2022-8-7'),
+('Hung','Ngo hung','091413774','n1245@gmail.com','2022-8-7'),
+('Thai','Tran Thai','0453277542','n1@gmail.com','2022-8-7'),
+('Tien','Bui Tien','04534224435','nyg@gmail.com','2022-8-7'),
+('Nam','Hoang Nam','0945378534','ndfg@gmail.com','2022-8-7'),
+('Quan','Hoang Quan','091457523','ng123@gmail.com','2022-8-7')
+
+INSERT INTO address(id,address,created_date) VALUES
+(1,'Ha Noi','2022-8-7'),
+(1,'Ho Chi Minh','2022-8-7'),
+(6,'Thai binh','2022-8-7'),
+(7,'Quang Ninh','2022-8-7'),
+(3,'Bac Giang','2022-8-7'),
+(6,'Can Tho','2022-8-7'),
+(8,'Lao Cai','2022-8-7'),
+(4,'Nam Dinh','2022-8-7'),
+(3,'HUng Yen','2022-8-7')
+
+
+SELECT account.id , username,full_name,phone,email,account.created_date,address FROM account Join address on account.id=address.id
+
+-- Sau khi làm xong câu trên, xoá 2 b?ng dó di, t?o l?i 2 b?ng nhu câu 1, r?i t?o thêm khoá ph? d? liên k?t 2 b?ng này ? d?ng quan h? N - N
+ 
+drop table address
+drop TABLE account
+
+CREATE TABLE account(
+	id INT primary key auto_increment,
+	username varchar(255) not null,
+	full_name varchar(255) not null,
+	phone varchar(11) not null,
+	email varchar(255) not null,
+	created_date  date not null
+)
+
+CREATE TABLE address(
+	id INT primary key auto_increment,
+	address varchar(255) not null,
+	created_date  date not null
+)
+
+CREATE table account_address(
+	account_id int,
+	address_id int,
+	FOREIGN key (account_id) REFERENCES account(id),
+	FOREIGN key (address_id) REFERENCES address(id)
+)
+
+-- Thêm m?i b?ng 10 b?n ghi
+INSERT Into account(username,full_name,phone,email,created_date) VALUES
+('Nam','Bui Nam','0914546875','n12@gmail.com','2022-8-7'),
+('Hoang','Hoang Ha','0914153545','n421@gmail.com','2022-8-7'),
+('Nhan','Duc Nhan','091135785','n24@gmail.com','2022-8-7'),
+('Linh','Thuy Linh','0914457578','n5124@gmail.com','2022-8-7'),
+('Tien','Quang Tien','091278543','n12435@gmail.com','2022-8-7'),
+('Hung','Ngo hung','091413774','n1245@gmail.com','2022-8-7'),
+('Thai','Tran Thai','0453277542','n1@gmail.com','2022-8-7'),
+('Tien','Bui Tien','04534224435','nyg@gmail.com','2022-8-7'),
+('Nam','Hoang Nam','0945378534','ndfg@gmail.com','2022-8-7'),
+('Quan','Hoang Quan','091457523','ng123@gmail.com','2022-8-7')
+
+INSERT INTO address(address,created_date) VALUES
+('Ha Noi','2022-8-7'),
+('Ho Chi Minh','2022-8-7'),
+('Thai binh','2022-8-7'),
+('Quang Ninh','2022-8-7'),
+('Bac Giang','2022-8-7'),
+('Can Tho','2022-8-7'),
+('Lao Cai','2022-8-7'),
+('Phu Tho','2022-8-7'),
+('Nam Dinh','2022-8-7'),
+('HUng Yen','2022-8-7')
+
+INSERT INTO account_address(account_id,address_id) VALUES
+(1,4),(3,3),(4,2),(7,5),(5,2),(5,7),(3,1),(6,8),(9,9),(1,7)
+
+SELECT account.id , username,full_name,phone,email,account.created_date,address FROM account_address Join account on account_address.account_id=account.id Join address on account_address.address_id=address.id
+
+
+-- Sau khi làm xong câu trên, xoá 2 b?ng dó di, t?o l?i 2 b?ng nhu câu 1 nhung v?i di?u ki?n s? dùng CASCADE lo?i DELETE, UPDATE

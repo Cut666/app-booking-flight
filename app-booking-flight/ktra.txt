@@ -1,0 +1,114 @@
+CREATE TABLE students(
+	ma_sv BIGINT PRIMARY Key auto_increment,
+	class VARCHAR(255) not null,
+	ho_ten VARCHAR(255) not null,
+	ngay_sinh DATE ,
+	gioi_tinh ENUM('Nam','Nu','Khac')
+)
+
+CREATE TABLE subjects(
+	ma_mon VARCHAR(255) PRIMARY KEY,
+	ten_mon VARCHAR(255) not null
+)
+
+CREATE TABLE marks(
+	ma_sv BIGINT,
+	ma_mon VARCHAR(255) not null,
+	lan_thi INT not null DEFAULT(1),
+	mark float not null,
+	CHECK(0<mark<=10),
+	CONSTRAINT fk_ma_sv FOREIGN KEY (ma_sv) REFERENCES students(ma_sv),
+	CONSTRAINT fk_ma_mon FOREIGN KEY (ma_mon) REFERENCES subjects(ma_mon)
+)
+
+INSERT INTO students(class,ho_ten,ngay_sinh,gioi_tinh) VALUES
+('Lop Dien 01','Hoang Nam',2001-4-10,'Nam'),
+('Lop CNTT 02','Ngo Hung',2002-4-11,'Nam'),
+('Lop TDH 01','Quang Tien',2003-4-1,'Nam'),
+('Lop TDH 05','Tran Nhat',1999-4-5,'Nam'),
+('Lop Dien 01','Thuy Tien',2000-4-12,'Nu'),
+('Lop Anh 01','Thu Hue',2000-4-12,'Nu'),
+('Lop Dien 01','Viet Anh',2002-4-6,'Nam'),
+('Lop CNTT 01','Tran Trong',1998-4-8,'Nam'),
+('Lop Dien 02','Pham Thoai',2001-4-7,'Nam'),
+('Lop Dien 03','Hung Pham',2004-4-12,'Nam')
+
+INSERT INTO subjects VALUES
+('CTDL','Database'),
+('HTML01','Web Can Ban'),
+('HTML02','Web Nang Cao'),
+('JVC','Java Core'),
+('JV+','Java Nang Cao'),
+('GT','Giai Thuat'),
+('C#','C# Can Ban'),
+('WinFrom','C# WinForm Can Ban'),
+('PHP','PHP Can Ban'),
+('JQuery','JavaScript')
+
+INSERT INTO marks VALUES
+(1,'CTDL',1,5.5),
+(1,'CTDL',2,10),
+(5,'GT',1,7),
+(10,'JVC',1,8),
+(6,'WinFrom',1,7),
+(8,'CTDL',1,8.7),
+(9,'PHP',1,5.5),
+(6,'WinFrom',2,9),
+(1,'PHP',1,5.5),
+(10,'WinFrom',1,8),
+(2,'JQuery',1,9)
+
+-- Lấy danh sách lần thi cuối cùng của các sinh viên gồm: Mã số sinh viên, mã số môn học, lần thi cuối cùng của môn học, điểm thi (ví dụ sinh viên A thi môn học C ba lần thì lần thi cuối cùng là 3).
+SELECT marks.* FROM marks JOIN (SELECT ma_sv ,ma_mon , MAX(lan_thi) as lan_thi  FROM marks  GROUP BY ma_sv,ma_mon) AS t1 ON t1.ma_sv=marks.ma_sv AND
+t1.ma_mon=marks.ma_mon AND t1.lan_thi=marks.lan_thi 
+
+
+-- Viết thủ tục procedure để lấy thông tin điểm thi của 1 sinh viên theo mã sinh viên
+
+DELIMITER $$
+	CREATE PROCEDURE get_mark(
+		IN pMa_sv VARCHAR(255)
+	)
+	BEGIN
+		SELECT *
+		FROM marks
+		WHERE ma_sv LIKE CONCAT('%', pMa_sv, '%');
+	END $$
+DELIMITER $$;
+
+
+CALL get_mark(2) 
+
+-- De 2
+CREATE TABLE sach(
+	ma_sach BIGINT PRIMARY KEY auto_increment ,
+	ten_sach VARCHAR(255),
+	so_luong_max int not null,
+	so_luong_da_muon int not null,
+	CHECK(0<so_luong_da_muon <so_luong_max)
+)
+
+CREATE TABLE doc_gia(
+	ma_doc_gia BIGINT PRIMARY KEY auto_increment,
+	ten_doc_gia VARCHAR(255) not null
+)
+
+CREATE TABLE phieu_muon(
+	ma_doc_gia BIGINT not null,
+	ma_sach BIGINT not null,
+	ngay_muon date not null,
+	ngay_tra date DEFAULT null,
+	CONSTRAINT fk_ma_doc_gia FOREIGN KEY (ma_doc_gia) REFERENCES doc_gia(ma_doc_gia),
+	CONSTRAINT fk_ma_sach FOREIGN KEY (ma_sach) REFERENCES sach(ma_sach)
+)
+
+INSERT INTO sach(ten_sach,so_luong_max,so_luong_da_muon) VALUES
+('Doremon',20,12),
+('Pokemon',20,10),
+('Naruto',20,8),
+('Truyen Kieu',20,5),
+('Thanh Giong',20,8),
+('Sieu Nhan Gao',20,10),
+('Thach Sanh',20,5),
+('NGhin Le Mot Dem',20,1)
+

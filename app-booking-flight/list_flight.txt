@@ -1,0 +1,3 @@
+{"flightCode":"CQ41G","flightName":"","fromPlace":"HCM","toPlace":"HN","time":{"year":2022,"month":0,"dayOfMonth":2,"hourOfDay":0,"minute":48,"second":24},"price":700000.0,"numberOfSeats":80}
+{"flightCode":"F4L1M","flightName":"HN-HCM","fromPlace":"HN","toPlace":"HP","time":{"year":2022,"month":9,"dayOfMonth":21,"hourOfDay":17,"minute":0,"second":48},"price":900000.0,"numberOfSeats":84}
+{"flightCode":"JF6H2","flightName":"HN-HCM","fromPlace":"HN","toPlace":"HCM","time":{"year":2022,"month":9,"dayOfMonth":6,"hourOfDay":9,"minute":0,"second":54},"price":8000000.0,"numberOfSeats":74}

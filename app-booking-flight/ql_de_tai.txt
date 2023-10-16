@@ -1,0 +1,99 @@
+-- a1
+CREATE TABLE list_khoa(
+	ma_khoa VARCHAR(6) PRIMARY KEY,
+	ten_khoa VARCHAR(50),
+	number_phone VARCHAR(11)
+)
+
+CREATE TABLE list_sinhvien(
+	ma_sv int PRIMARY KEY,
+	ten_sinhvien VARCHAR(50),
+	ma_khoa VARCHAR(6),
+	FOREIGN KEY (ma_khoa) REFERENCES list_khoa(ma_khoa),
+	nam_sinh VARCHAR(10),
+	que_quan VARCHAR(20)
+)
+
+CREATE TABLE list_giangvien(
+	ma_giangvien int primary key,
+	ho_ten VARCHAR(50),
+	ma_khoa VARCHAR(6),
+	FOREIGN KEY (ma_khoa) REFERENCES list_khoa(ma_khoa),
+	luong FLOAT
+)
+
+CREATE TABLE list_detai(
+	ma_detai VARCHAR(6) primary key,
+	ten_detai VARCHAR(50),
+	kinh_phi float,
+	noi_thuc_tap VARCHAR(50)
+)
+
+CREATE TABLE list_thong_tin_huong_dan(
+	stt int PRIMARY KEY auto_increment,
+	ma_sv int,
+	FOREIGN KEY (ma_sv) REFERENCES list_sinhvien(ma_sv),
+	ma_detai VARCHAR(6),
+	FOREIGN KEY (ma_detai) REFERENCES list_detai(ma_detai),
+	ma_giangvien int,
+	FOREIGN KEY (ma_giangvien) REFERENCES list_giangvien(ma_giangvien),
+	ket_qua float
+)
+
+-- b1. Thêm dữ liệu vào bảng khoa
+INSERT INTO list_khoa VALUES
+('Geo', 'Dia ly va QLTN', 3855413),
+('Math', 'Toan', 3855411),
+('Bio', 'Cong nghe Sinh hoc', 3855412);
+
+INSERT INTO list_giangvien(ma_giangvien,ho_ten,luong,ma_khoa) VALUES
+(11, 'Thanh Xuan', 700, 'Geo'),
+	(12, 'Thu Minh', 500, 'Math'),
+	(13, 'Chu Tuan', 650, 'Geo'),
+	(14, 'Le Thi Lan', 500, 'Bio'),
+	(15, 'Tran Xoay', 900, 'Math');
+
+	INSERT INTO list_sinhvien VALUES
+	(1, 'Le Van Sao', 'Bio', 1990, 'Nghe An'),
+	(2, 'Nguyen Thi My', 'Geo', 1990, 'Thanh Hoa'),
+	(3, 'Bui Xuan Duc', 'Math', 1992, 'Ha Noi'),
+	(4, 'Nguyen Van Tung', 'Bio', null, 'Ha Tinh'),
+	(5, 'Le Khanh Linh', 'Bio', 1989, 'Ha Nam'),
+	(6, 'Tran Khac Trong', 'Geo', 1991, 'Thanh Hoa'),
+	(7, 'Le Thi Van', 'Math', null, 'Ha Noi'),
+	(8, 'Hoang Van Duc', 'Bio', 1992, 'Nghe An');
+
+
+INSERT INTO list_detai VALUES
+('Dt01', 'GIS', 100, 'Nghe An'),
+	('Dt02', 'ARC GIS', 500, 'Nam Dinh'),
+	('Dt03', 'Spatial DB', 100, 'Ha Tinh'),
+	('Dt04', 'MAP', 300, 'Quang Binh');
+
+	INSERT into list_thong_tin_huong_dan(stt,ma_detai,ma_giangvien,ma_sv) VALUES
+	(1, 'Dt01', 13, 8),
+	(2, 'Dt03', 14, 5),
+	(3, 'Dt03', 12, 1),
+	(5, 'Dt04', 14, 7),
+	(6, 'Dt01', 13, Null),
+	(7, 'Dt04', 11, 1),
+	(8, 'Dt03', 15, 6);
+
+
+-- Lấy thông tin gồm mã giảng viên, tên giảng viên, tên khoa
+
+SELECT ma_giangvien,ho_ten,ten_khoa FROM list_giangvien JOIN list_khoa ON list_giangvien.ma_khoa = list_khoa.ma_khoa
+
+--  Lấy thông tin gồm mã giảng viên, tên giảng viên, tên khoa hướng dẫn từ 3 sinh viên trở lên (3 de tai)
+
+SELECT ma_giangvien,ho_ten,ten_khoa FROM list_giangvien JOIN list_khoa ON list_giangvien.ma_khoa = list_khoa.ma_khoa WHERE ma_giangvien IN (SELECT ma_giangvien FROM list_thong_tin_huong_dan GROUP BY ma_giangvien HAVING COUNT(ma_giangvien) >=3 )
+
+-- i. Lấy ra thông tin những sinh viên chưa có điểm thực tập
+
+SELECT * FROM list_sinhvien WHERE ma_sv IN (SELECT ma_sv FROM list_thong_tin_huong_dan WHERE ket_qua is null)
+
+
+
+
+
+
